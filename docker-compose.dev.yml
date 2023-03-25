@@ -1,0 +1,32 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: pg-nest-ddd
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5433:5432'
+    volumes: 
+      - db-pg-nest-ddd:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4-nest-ddd
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@localhost.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    ports:
+      - '8080:80'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+
+volumes:
+  db-pg-nest-ddd:
+    driver: local
+  
+  pgadmin-data:
+    driver: local

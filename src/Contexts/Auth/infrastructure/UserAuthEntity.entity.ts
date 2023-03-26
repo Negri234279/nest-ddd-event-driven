@@ -4,7 +4,7 @@ import { PrimaryColumn } from 'typeorm/decorator/columns/PrimaryColumn'
 
 import { IUserAuth } from '../domain/IUserAuth'
 
-@Entity({ name: 'users-auth' })
+@Entity({ name: 'auth-users' })
 export class UserAuthEntity implements IUserAuth {
     @PrimaryColumn()
     id: string

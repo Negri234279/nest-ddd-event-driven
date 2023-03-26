@@ -1,12 +1,12 @@
-import { Body, ConflictException, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post } from '@nestjs/common'
 import { Get } from '@nestjs/common/decorators'
-import { UserAuthAggregate } from '../domain/UserAuthAggregate'
+
+import { UserAuthService } from '../application/user-auth.service'
 import { RegisterAuthDto } from './dtos/RegisterAuth.dto'
-import { UserAuthRepository } from './repository.service'
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly repository: UserAuthRepository) {}
+    constructor(private readonly authService: UserAuthService) {}
 
     @Get()
     healt(): void {
@@ -17,26 +17,8 @@ export class AuthController {
     async register(@Body() user: RegisterAuthDto): Promise<any> {
         console.log('Auth register')
 
-        const existUserById = await this.repository.findOne(user.id)
-        if (existUserById) {
-            throw new ConflictException('The id is already in use')
-        }
+        await this.authService.register(user)
 
-        const existUserByEmail = await this.repository.findOneByEmail(
-            user.email,
-        )
-        if (existUserByEmail) {
-            throw new ConflictException('The email is already in use')
-        }
-
-        const newUserAuth = new UserAuthAggregate(
-            user.id,
-            user.email,
-            user.password,
-            new Date(),
-            new Date(),
-        )
-
-        await this.repository.save(newUserAuth)
+        console.log('Auth register sucesfully')
     }
 }

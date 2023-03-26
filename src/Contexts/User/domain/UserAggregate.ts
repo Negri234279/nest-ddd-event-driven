@@ -1,25 +1,31 @@
 import { AggregateRoot } from '@nestjs/cqrs'
 
-import { IUserAuth } from './IUserAuth'
+import { IUser } from './IUser'
 
-export class UserAuthAggregate extends AggregateRoot implements IUserAuth {
+export class UserAggregate extends AggregateRoot implements IUser {
     public id: string
     public email: string
-    public password: string
+    public name: string
+    public surname: string
+    public role: string
     public createdAt: number
     public updatedAt: number
 
     constructor(
         id: string,
         email: string,
-        password: string,
+        name: string,
+        surname: string,
+        role: string,
         createdAt: number,
         updatedAt: number,
     ) {
         super()
         this.id = id
         this.email = email
-        this.password = password
+        this.name = name
+        this.surname = surname
+        this.role = role
         this.createdAt = createdAt
         this.updatedAt = updatedAt
     }

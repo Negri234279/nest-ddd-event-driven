@@ -4,6 +4,6 @@ export interface IUser {
     name: string
     surname: string
     role: string
-    createdAt: Date
-    updatedAt: Date
+    createdAt: number
+    updatedAt: number
 }

@@ -1,6 +1,7 @@
 import { Entity } from 'typeorm'
 import { Column } from 'typeorm/decorator/columns/Column'
 import { PrimaryColumn } from 'typeorm/decorator/columns/PrimaryColumn'
+
 import { IUser } from '../domain/IUser'
 
 @Entity({ name: 'users-users' })
@@ -20,9 +21,9 @@ export class UserEntity implements IUser {
     @Column()
     role: string
 
-    @Column({ type: 'timestamp' })
-    createdAt: Date
+    @Column({ type: 'int8' })
+    createdAt: number
 
-    @Column({ type: 'timestamp' })
-    updatedAt: Date
+    @Column({ type: 'int8' })
+    updatedAt: number
 }

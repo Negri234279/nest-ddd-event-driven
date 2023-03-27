@@ -1,12 +1,15 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import helmet from 'helmet'
+
 import { AppModule } from './app.module'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
-        logger: ['error', 'warn'],
+        bufferLogs: true,
     })
+
+    // app.useLogger(app.get(Logger))
 
     app.enableCors()
     app.use(helmet())

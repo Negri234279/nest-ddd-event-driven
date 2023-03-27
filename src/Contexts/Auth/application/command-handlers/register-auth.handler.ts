@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -9,6 +10,8 @@ import { RegisterAuthCommand } from '../commands/register-auth.command'
 export class RegisterAuthHandler
     implements ICommandHandler<RegisterAuthCommand>
 {
+    private readonly logger = new Logger(RegisterAuthHandler.name)
+
     constructor(
         @InjectRepository(UserAuthEntity)
         private readonly repository: Repository<UserAuthEntity>,
@@ -23,5 +26,7 @@ export class RegisterAuthHandler
         userEntity.updatedAt = command.user.updatedAt
 
         await this.repository.save(userEntity)
+
+        this.logger.log('Saving user in auth')
     }
 }

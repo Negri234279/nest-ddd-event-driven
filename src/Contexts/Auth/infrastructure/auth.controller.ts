@@ -15,7 +15,7 @@ export class AuthController {
         return
     }
 
-    @Post()
+    @Post('register')
     async register(@Body() user: RegisterAuthDto): Promise<any> {
         this.logger.log('Iniciando registro')
 

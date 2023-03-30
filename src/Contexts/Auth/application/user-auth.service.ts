@@ -1,6 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 import { Logger } from '@nestjs/common/services'
 import { CommandBus, EventBus } from '@nestjs/cqrs'
+import { CreatedAtVO } from 'src/Core/domain/valueObject/CreatedAt.vo'
+import { UpdatedAtVO } from 'src/Core/domain/valueObject/UpdatedAt.vo'
 
 import { UserAuthCreatedEvent } from '../domain/events/user-auth-created.event'
 import { UserAuthAggregate } from '../domain/UserAuthAggregate'
@@ -34,14 +36,14 @@ export class UserAuthService {
                 throw new ConflictException('The email is already in use')
             }
 
-            const newDate = new Date().getTime()
+            const newDate = CreatedAtVO.create()
 
             const newUserAuth = new UserAuthAggregate(
                 user.id,
                 user.email,
                 user.password,
                 newDate,
-                newDate,
+                new UpdatedAtVO(newDate.value),
             )
 
             const command = new RegisterAuthCommand(newUserAuth)

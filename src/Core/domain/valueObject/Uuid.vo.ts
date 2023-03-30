@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid'
 import { ValueObject } from './ValueObject'
 
 export class UuidVO extends ValueObject<string> {
-    private readonly regex: RegExp =
+    private static readonly regex: RegExp =
         /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
     constructor(value: string) {
@@ -17,7 +17,7 @@ export class UuidVO extends ValueObject<string> {
     }
 
     private ensureIsValidUuid(value: string): void {
-        if (!this.regex.test(value)) {
+        if (!UuidVO.regex.test(value)) {
             throw new BadRequestException(
                 `<${UuidVO.name}> does not allow the value <${value}>`,
             )

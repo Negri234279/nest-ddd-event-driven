@@ -17,10 +17,21 @@ export class AuthController {
 
     @Post('register')
     async register(@Body() user: RegisterAuthDto): Promise<any> {
-        this.logger.log('Iniciando registro')
+        try {
+            this.logger.log('Iniciando registro')
 
-        await this.authService.register(user)
+            this.logger.debug(user.id)
+            this.logger.debug(user.name)
+            this.logger.debug(user.surname)
+            this.logger.debug(user.email)
+            this.logger.debug(user.password)
 
-        this.logger.log('sucesfully')
+            await this.authService.register(user)
+
+            this.logger.log('sucesfully')
+        } catch (error) {
+            this.logger.error(error)
+            throw error
+        }
     }
 }

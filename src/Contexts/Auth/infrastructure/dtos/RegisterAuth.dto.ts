@@ -1,23 +1,30 @@
-import { IsNotEmpty, IsEmail, IsString, IsUUID } from 'class-validator'
+import { Transform } from 'class-transformer'
+import { IsNotEmpty } from 'class-validator'
+import { UserId } from 'src/Contexts/Shared/domain/User/UserId.vo'
+import { UserNameVO } from 'src/Contexts/Shared/domain/User/UserName.vo'
+import { UserSurnameVO } from 'src/Contexts/Shared/domain/User/UserSurname.vo'
+
+import { UserAuthEmailVO } from '../../domain/valueObject/UserAuthEmail'
+import { UserAuthPasswordVO } from '../../domain/valueObject/UserAuthPassword.vo'
 
 export class RegisterAuthDto {
-    @IsUUID('4')
+    @Transform(({ value }) => new UserId(value))
     @IsNotEmpty()
-    id: string
+    id: UserId
 
-    @IsString()
+    @Transform(({ value }) => new UserNameVO(value))
     @IsNotEmpty()
-    name: string
+    name: UserNameVO
 
-    @IsString()
+    @Transform(({ value }) => new UserSurnameVO(value))
     @IsNotEmpty()
-    surname: string
+    surname: UserSurnameVO
 
-    @IsEmail()
+    @Transform(({ value }) => new UserAuthEmailVO(value))
     @IsNotEmpty()
-    email: string
+    email: UserAuthEmailVO
 
-    @IsString()
+    @Transform(({ value }) => new UserAuthPasswordVO(value))
     @IsNotEmpty()
-    password: string
+    password: UserAuthPasswordVO
 }

@@ -1,9 +1,9 @@
 import { TimestampVO } from './Timestamp.vo'
 
-export class UpdatedAtVO extends TimestampVO {
-    static create(): UpdatedAtVO {
+export class UpdatedAt extends TimestampVO {
+    static create(): UpdatedAt {
         const newDate = new Date().getTime()
 
-        return new UpdatedAtVO(newDate)
+        return new UpdatedAt(newDate)
     }
 }

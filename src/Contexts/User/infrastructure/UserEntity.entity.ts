@@ -2,10 +2,8 @@ import { Entity } from 'typeorm'
 import { Column } from 'typeorm/decorator/columns/Column'
 import { PrimaryColumn } from 'typeorm/decorator/columns/PrimaryColumn'
 
-import { IUser } from '../domain/IUser'
-
 @Entity({ name: 'users-users' })
-export class UserEntity implements IUser {
+export class UserEntity {
     @PrimaryColumn()
     id: string
 

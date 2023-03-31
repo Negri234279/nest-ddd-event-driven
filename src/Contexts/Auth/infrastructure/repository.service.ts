@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserId } from 'src/Contexts/Shared/domain/User/UserId.vo'
-import { CreatedAtVO } from 'src/Core/domain/valueObject/CreatedAt.vo'
-import { UpdatedAtVO } from 'src/Core/domain/valueObject/UpdatedAt.vo'
+import { CreatedAt } from 'src/Core/domain/valueObject/CreatedAt.vo'
+import { UpdatedAt } from 'src/Core/domain/valueObject/UpdatedAt.vo'
 import { Repository } from 'typeorm'
 
 import { UserAuthAggregate } from '../domain/UserAuthAggregate'
-import { UserAuthEmailVO } from '../domain/valueObject/UserAuthEmail'
+import { UserEmail } from '../../Shared/domain/User/UserEmail'
 import { UserAuthPasswordVO } from '../domain/valueObject/UserAuthPassword.vo'
 import { UserAuthEntity } from './UserAuthEntity.entity'
 
@@ -26,9 +26,7 @@ export class UserAuthRepository {
         return this.mapToDomain(user)
     }
 
-    async findOneByEmail(
-        email: UserAuthEmailVO,
-    ): Promise<UserAuthAggregate | null> {
+    async findOneByEmail(email: UserEmail): Promise<UserAuthAggregate | null> {
         const user = await this.userRepository.findOneBy({ email: email.value })
         if (!user) {
             return null
@@ -43,23 +41,23 @@ export class UserAuthRepository {
         await this.userRepository.save(userEntity)
     }
 
-    private mapToDomain(userAuthEntity: UserAuthEntity): UserAuthAggregate {
+    private mapToDomain(user: UserAuthEntity): UserAuthAggregate {
         return new UserAuthAggregate(
-            new UserId(userAuthEntity.id),
-            new UserAuthEmailVO(userAuthEntity.email),
-            new UserAuthPasswordVO(userAuthEntity.password),
-            new CreatedAtVO(userAuthEntity.createdAt),
-            new UpdatedAtVO(userAuthEntity.updatedAt),
+            new UserId(user.id),
+            new UserEmail(user.email),
+            new UserAuthPasswordVO(user.password),
+            new CreatedAt(user.createdAt),
+            new UpdatedAt(user.updatedAt),
         )
     }
 
-    private mapToEntity(userAuthAggregate: UserAuthAggregate): UserAuthEntity {
+    private mapToEntity(user: UserAuthAggregate): UserAuthEntity {
         const userEntity = new UserAuthEntity()
-        userEntity.id = userAuthAggregate.id.value
-        userEntity.email = userAuthAggregate.email.value
-        userEntity.password = userAuthAggregate.password.value
-        userEntity.createdAt = userAuthAggregate.createdAt.value
-        userEntity.updatedAt = userAuthAggregate.updatedAt.value
+        userEntity.id = user.id.value
+        userEntity.email = user.email.value
+        userEntity.password = user.password.value
+        userEntity.createdAt = user.createdAt.value
+        userEntity.updatedAt = user.updatedAt.value
 
         return userEntity
     }

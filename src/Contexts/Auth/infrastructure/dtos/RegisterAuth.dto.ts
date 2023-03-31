@@ -1,10 +1,10 @@
 import { Transform } from 'class-transformer'
 import { IsNotEmpty } from 'class-validator'
 import { UserId } from 'src/Contexts/Shared/domain/User/UserId.vo'
-import { UserNameVO } from 'src/Contexts/Shared/domain/User/UserName.vo'
-import { UserSurnameVO } from 'src/Contexts/Shared/domain/User/UserSurname.vo'
+import { UserName } from 'src/Contexts/Shared/domain/User/UserName.vo'
+import { UserSurname } from 'src/Contexts/Shared/domain/User/UserSurname.vo'
 
-import { UserAuthEmailVO } from '../../domain/valueObject/UserAuthEmail'
+import { UserEmail } from '../../../Shared/domain/User/UserEmail'
 import { UserAuthPasswordVO } from '../../domain/valueObject/UserAuthPassword.vo'
 
 export class RegisterAuthDto {
@@ -12,17 +12,17 @@ export class RegisterAuthDto {
     @IsNotEmpty()
     id: UserId
 
-    @Transform(({ value }) => new UserNameVO(value))
+    @Transform(({ value }) => new UserName(value))
     @IsNotEmpty()
-    name: UserNameVO
+    name: UserName
 
-    @Transform(({ value }) => new UserSurnameVO(value))
+    @Transform(({ value }) => new UserSurname(value))
     @IsNotEmpty()
-    surname: UserSurnameVO
+    surname: UserSurname
 
-    @Transform(({ value }) => new UserAuthEmailVO(value))
+    @Transform(({ value }) => new UserEmail(value))
     @IsNotEmpty()
-    email: UserAuthEmailVO
+    email: UserEmail
 
     @Transform(({ value }) => new UserAuthPasswordVO(value))
     @IsNotEmpty()

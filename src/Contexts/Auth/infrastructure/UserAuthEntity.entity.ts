@@ -2,10 +2,8 @@ import { Entity } from 'typeorm'
 import { Column } from 'typeorm/decorator/columns/Column'
 import { PrimaryColumn } from 'typeorm/decorator/columns/PrimaryColumn'
 
-import { IUserAuth } from '../domain/IUserAuth'
-
 @Entity({ name: 'auth-users' })
-export class UserAuthEntity implements IUserAuth {
+export class UserAuthEntity {
     @PrimaryColumn()
     id: string
 

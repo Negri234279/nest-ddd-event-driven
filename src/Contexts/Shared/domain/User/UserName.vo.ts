@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common'
 import { ValueObject } from 'src/Core/domain/valueObject/ValueObject'
 
-export class UserNameVO extends ValueObject<string> {
+export class UserName extends ValueObject<string> {
     private static readonly regex: RegExp =
         /^[a-zA-ZÀ-ÿ]+([a-zA-ZÀ-ÿ '’’-][a-zA-ZÀ-ÿ]+)*$/
 
@@ -11,9 +11,9 @@ export class UserNameVO extends ValueObject<string> {
     }
 
     private ensureIsValidName(value: string): void {
-        if (!UserNameVO.regex.test(value)) {
+        if (!UserName.regex.test(value)) {
             throw new BadRequestException(
-                `<${UserNameVO.name}> does not allow the value <${value}>`,
+                `<${UserName.name}> does not allow the value <${value}>`,
             )
         }
     }

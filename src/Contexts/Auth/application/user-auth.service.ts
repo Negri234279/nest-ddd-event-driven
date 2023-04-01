@@ -9,6 +9,7 @@ import { UserAuthAggregate } from '../domain/UserAuthAggregate'
 import { RegisterAuthDto } from '../infrastructure/dtos/RegisterAuth.dto'
 import { UserAuthRepository } from '../infrastructure/repository.service'
 import { RegisterAuthCommand } from './commands/register-auth.command'
+import { UserAuthPasswordVO } from '../domain/valueObject/UserAuthPassword.vo'
 
 @Injectable()
 export class UserAuthService {
@@ -38,10 +39,14 @@ export class UserAuthService {
 
             const newDate = CreatedAt.create()
 
+            const passwordHashed = await UserAuthPasswordVO.hash(
+                user.password.value,
+            )
+
             const newUserAuth = new UserAuthAggregate(
                 user.id,
                 user.email,
-                user.password,
+                passwordHashed,
                 newDate,
                 new UpdatedAt(newDate.value),
             )

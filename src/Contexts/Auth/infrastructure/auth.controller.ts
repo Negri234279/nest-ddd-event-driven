@@ -20,12 +20,6 @@ export class AuthController {
         try {
             this.logger.log('Iniciando registro')
 
-            this.logger.debug(user.id)
-            this.logger.debug(user.name)
-            this.logger.debug(user.surname)
-            this.logger.debug(user.email)
-            this.logger.debug(user.password)
-
             await this.authService.register(user)
 
             this.logger.log('sucesfully')
